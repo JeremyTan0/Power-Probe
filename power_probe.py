@@ -44,12 +44,21 @@ def welcome_commands():
         clear()
         sign_up()
     elif user_input == "guest" or user_input == "g":
-        clear()
-        game_home_guest(current_user={
-            "username": "Guest",
-            "password": "NULL",
-            "high_score": "NULL"
-        })
+        guest_confirm = input("You are about to play as a guest user. Progress and scores will NOT be saved. Are you sure (Y/N)? ").lower()
+        while guest_confirm not in ['yes', 'y', 'no', 'n']:
+            print("Invalid input. Enter either (Y/N): ")
+            guest_confirm = input(
+                "You are about to play as a guest user. Progress and scores will NOT be saved. Are you sure (Y/N)?").lower()
+        if guest_confirm == 'yes' or guest_confirm == 'y':
+            clear()
+            game_home_guest(current_user={
+                "username": "Guest",
+                "password": "NULL",
+                "high_score": "NULL"
+            })
+        else:
+            clear()
+            welcome_commands()
     elif user_input == "about" or user_input == "a":
         clear()
         about()
@@ -89,8 +98,18 @@ def login():
                 login()
             else:
                 print("User validated!")
-                clear()
-                game_home_user(current_user)
+
+                login_confirm = input(f"You are about to log in as {credential}. Proceed (Y/N)? ")
+                confirm_commands = ['y', 'n', 'back', 'b', 'yes', 'no']
+                while login_confirm not in confirm_commands:
+                    print("\nInvalid command entered!")
+                    login_confirm = input(f"You are about to log in as {credential}. Proceed (Y/N)? ")
+                if login_confirm == 'y' or login_confirm == 'yes':
+                    clear()
+                    game_home_user(current_user)
+                else:
+                    clear()
+                    welcome_commands()
         else:
             clear()
             welcome_commands()
@@ -185,7 +204,10 @@ def game_home_user(current_user):
     user_input = input("[start, lb, help, settings, quit]: ").lower()
     while user_input not in valid_commands:
         print("\nInvalid input, please try again.")
-        user_input = input("[start, lb, help, settings, quit]: ")
+        user_input = input("[quit]: ")
+    if user_input == 'quit' or user_input == 'q':
+        clear()
+        welcome_commands()
 
 
 def game_home_guest(current_user):
@@ -205,7 +227,10 @@ def game_home_guest(current_user):
     user_input = input("[start, lb, help, quit]: ").lower()
     while user_input not in valid_commands:
         print("\nInvalid input, please try again.")
-        user_input = input("[start, lb, help, quit]: ")
+        user_input = input("[quit]: ")
+    if user_input == 'quit' or user_input == 'q':
+        clear()
+        welcome_commands()
 
 welcome_commands()
 
