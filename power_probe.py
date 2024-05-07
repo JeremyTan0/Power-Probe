@@ -9,7 +9,7 @@ def clear():
     print("\n" * 100)
 
 valid_commands = ['login', 'signup', 'guest', 'about', 'quit', 'l', 's', 'g', 'a', 'q', 'Login', "Signup", "Guest", "About", "Quit"]
-login_commands = ['back', 'b']
+login_commands = ['back', 'b', 'Back']
 
 user_input = None
 
@@ -63,8 +63,7 @@ def welcome_commands():
         clear()
         about()
     elif user_input == "quit" or user_input == "q":
-        confirm = input("You are about to quit the program. Are you sure (Y/N)? ")
-        confirm.lower()
+        confirm = input("You are about to quit the program. Are you sure (Y/N)? ").lower()
         while confirm not in ["n", "no", "yes", "y"]:
             print("Invalid input.")
             confirm = input("You are about to quit the program. Are you sure (Y/N)? ")
@@ -99,7 +98,7 @@ def login():
             else:
                 print("User validated!")
 
-                login_confirm = input(f"You are about to log in as {credential}. Proceed (Y/N)? ")
+                login_confirm = input(f"You are about to log in as {credential}. Proceed (Y/N)? ").lower()
                 confirm_commands = ['y', 'n', 'back', 'b', 'yes', 'no']
                 while login_confirm not in confirm_commands:
                     print("\nInvalid command entered!")
@@ -139,17 +138,23 @@ def sign_up():
 
         if credential not in existing_usernames and credential not in valid_commands:
             valid_credential = True
-        else:
-            print("\nUsername invalid. Either it already exists or is less than 3 characters.")
+        elif credential in existing_usernames:
+            print("\nUsername invalid. It already exists.")
+            credential = input("Enter your chosen username (Minimum of 3 characters): ")
+        elif len(credential) < 3:
+            print("\nUsername invalid. It is less than 3 characters.")
             credential = input("Enter your chosen username (Minimum of 3 characters): ")
 
     if valid_credential:
-        password = input("Enter a password: ")
-        confirm_password = input("Confirm password: ")
-        while password != confirm_password:
-            print("Passwords do not match\n")
-            password = input("Enter a password: ")
-            confirm_password = input("Confirm password: ")
+        password = input("Enter a password (Minimum of 3 characters): ")
+        confirm_password = input("Confirm password (Minimum of 3 characters): ")
+        while password != confirm_password or len(password) < 3:
+            if password != confirm_password:
+                print("Passwords do not match\n")
+            else:
+                print("Password is less than 3 characters\n")
+            password = input("Enter a password (Minimum of 3 characters): ")
+            confirm_password = input("Confirm password (Minimum of 3 characters): ")
 
         user_confirmation = input(f"Confirm that these details are correct?\nUsername: {credential}\nPassword: {password}\n\nType (Y/N) to confirm or not: ").lower()
         confirm_commands = ['y', 'n', 'back', 'b', 'yes', 'no']
