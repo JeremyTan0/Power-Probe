@@ -1,0 +1,10 @@
+{"users": [{"password": "123", "username": "user1", "high_score": 0,
+  "games_played": 0
+},
+  {"password": "qwerty456", "username": "user2", "high_score": 0,
+    "games_played": 0
+  },
+  {"password": "securePass789", "username": "user3", "high_score": 0, "games_played": 0},
+  {"username": "test", "password": "123", "high_score": 0,
+    "games_played": 0
+  }]}
